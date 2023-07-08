@@ -1,43 +1,46 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class newTaskForm extends Component {
+  state = {
+    label: '',
+  };
 
-    state = {
-        label: ''
-    }
+  onLabelChange = (e) => {
+    this.setState({
+      label: e.target.value,
+    });
+  };
 
-    static defaultProps = {
-        onItemAdded: () => {}
-    }
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { label } = this.state;
+    const { onItemAdded } = this.props;
+    this.setState({ label: '' });
+    onItemAdded(label);
+  };
 
-    static propTypes = {
-        onItemAdded: PropTypes.func
-    }
+  render() {
+    const { label } = this.state;
+    return (
+      <form onSubmit={this.onSubmit}>
+        <input
+          type="text"
+          className="new-todo"
+          placeholder="What needs to be done?"
+          autoFocus
+          onChange={this.onLabelChange}
+          value={label}
+        />
+      </form>
+    );
+  }
+}
 
-    onLabelChange = (e) => {
-      this.setState({
-        label: e.target.value
-      })
-    };
+newTaskForm.defaultProps = {
+  onItemAdded: () => {},
+};
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        const { label } = this.state;
-        this.setState({ label: '' });
-        this.props.onItemAdded(label);
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.onSubmit}>
-                <input type="text"
-                        className="new-todo" 
-                        placeholder="What needs to be done?" 
-                        autoFocus 
-                        onChange={this.onLabelChange} 
-                        value={this.state.label} />
-            </form>
-        )
-    }
+newTaskForm.propTypes = {
+  onItemAdded: PropTypes.func,
 };

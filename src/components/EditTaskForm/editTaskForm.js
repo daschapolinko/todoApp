@@ -1,42 +1,39 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class editTaskForm extends Component {
+  state = {
+    label: this.props,
+  };
 
-    state = {
-        label: this.props.label
-    }
+  onLabelChange = (e) => {
+    this.setState({
+      label: e.target.value,
+    });
+  };
 
-    static defaultProps = {
-        onItemAdded: () => {}
-    }
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { onEditLabel } = this.props;
+    const { label } = this.state;
+    this.setState({ label: '' });
+    onEditLabel(label);
+  };
 
-    static propTypes = {
-        onItemAdded: PropTypes.func
-    }
+  render() {
+    const { label } = this.state;
+    return (
+      <form onSubmit={this.onSubmit}>
+        <input type="text" className="edit" autoFocus onChange={this.onLabelChange} value={label} />
+      </form>
+    );
+  }
+}
 
-    onLabelChange = (e) => {
-      this.setState({
-        label: e.target.value
-      })
-    };
+editTaskForm.defaultProps = {
+  onEditLabel: () => {},
+};
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        const { label } = this.state;
-        this.setState({ label: '' });
-        this.props.onEditLabel(label);
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.onSubmit}>
-                <input type="text"
-                        className="edit"
-                        autoFocus 
-                        onChange={this.onLabelChange} 
-                        value={this.state.label} />
-            </form>
-        )
-    }
+editTaskForm.propTypes = {
+  onEditLabel: PropTypes.func,
 };

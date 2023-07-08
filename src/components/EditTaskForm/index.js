@@ -1,2 +1,3 @@
-import EditTaskForm from './editTaskForm'
-export default EditTaskForm
+import EditTaskForm from './editTaskForm';
+
+export default EditTaskForm;

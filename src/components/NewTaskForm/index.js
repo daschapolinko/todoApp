@@ -1,2 +1,3 @@
-import NewTaskForm from './newTaskForm'
-export default NewTaskForm
+import NewTaskForm from './newTaskForm';
+
+export default NewTaskForm;

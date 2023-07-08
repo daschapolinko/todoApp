@@ -1,38 +1,34 @@
-import React from "react";
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const filterButtons = [
-    { name: 'all', label: 'All' },
-    { name: 'active', label: 'Active' },
-    { name: 'completed', label: 'Completed' }
-  ];
-  
-const TaskFilter = ({ filter, onFilterChange }) => {
+  { name: 'all', label: 'All' },
+  { name: 'active', label: 'Active' },
+  { name: 'completed', label: 'Completed' },
+];
 
-    const filters = filterButtons.map(({ name, label }) => {
-        return (
-            <li key={name}>
-                <button className={name === filter ? "selected" : ''} onClick={() => onFilterChange(name)}>{label}</button>
-            </li>
-        )
-    })
-    
+function TaskFilter({ filter, onFilterChange }) {
+  const filters = filterButtons.map(({ name, label }) => {
     return (
-        <ul className="filters">
-            {filters}
-        </ul>
-    )
-};
+      <li key={name}>
+        <button type="button" className={name === filter ? 'selected' : ''} onClick={() => onFilterChange(name)}>
+          {label}
+        </button>
+      </li>
+    );
+  });
+
+  return <ul className="filters">{filters}</ul>;
+}
 
 TaskFilter.defaultProps = {
-    filter: 'all',
-    onFilterChange: () => {}
-}
+  filter: 'all',
+  onFilterChange: () => {},
+};
 
 TaskFilter.propTypes = {
-    filter: PropTypes.oneOf(['all', 'active', 'completed']),
-    onFilterChange: PropTypes.func
-
-}
+  filter: PropTypes.oneOf(['all', 'active', 'completed']),
+  onFilterChange: PropTypes.func,
+};
 
 export default TaskFilter;
