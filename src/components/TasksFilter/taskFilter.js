@@ -8,15 +8,13 @@ const filterButtons = [
 ];
 
 function TaskFilter({ filter, onFilterChange }) {
-  const filters = filterButtons.map(({ name, label }) => {
-    return (
-      <li key={name}>
-        <button type="button" className={name === filter ? 'selected' : ''} onClick={() => onFilterChange(name)}>
-          {label}
-        </button>
-      </li>
-    );
-  });
+  const filters = filterButtons.map(({ name, label }) => (
+    <li key={name}>
+      <button type="button" className={name === filter ? 'selected' : ''} onClick={() => onFilterChange(name)}>
+        {label}
+      </button>
+    </li>
+  ));
 
   return <ul className="filters">{filters}</ul>;
 }
