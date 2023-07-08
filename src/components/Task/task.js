@@ -6,7 +6,7 @@ function Task({ description, creationTime, onToggleDone, onDelete, onEdit }) {
   return (
     <div className="view">
       <input className="toggle" type="checkbox" onClick={onToggleDone} />
-      <label onClick={onToggleDone}>
+      <label>
         <span className="description">{description}</span>
         <span className="created">
           created {formatDistanceToNow(creationTime, { addSuffix: true, includeSeconds: true })}
