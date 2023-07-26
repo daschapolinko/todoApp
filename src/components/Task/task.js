@@ -2,11 +2,11 @@ import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
-function Task({ description, creationTime, onToggleDone, onDelete, onEdit }) {
+function Task({ description, completed, creationTime, onToggleDone, onDelete, onEdit }) {
   return (
     <div className="view">
-      <input className="toggle" type="checkbox" onClick={onToggleDone} />
-      <label>
+      <input className="toggle" type="checkbox" onClick={onToggleDone} checked={completed} onChange={() => {}} />
+      <label onClick={onToggleDone}>
         <span className="description">{description}</span>
         <span className="created">
           created {formatDistanceToNow(creationTime, { addSuffix: true, includeSeconds: true })}

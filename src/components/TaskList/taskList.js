@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Task from '../Task';
 import EditTaskForm from '../EditTaskForm';
@@ -7,13 +8,15 @@ import EditTaskForm from '../EditTaskForm';
 function TaskList({ todos, onEdit, onToggleDone, onDelete, onEditLabel }) {
   const elements = todos.map((item) => {
     const { id, completed, editing, ...props } = item;
-    let classN = '';
-    if (completed) classN = 'completed';
-    else if (editing) classN = 'editing';
+    const classN = classNames({
+      completed,
+      editing,
+    });
     return (
       <li key={id} className={classN}>
         <Task
           {...props}
+          completed={completed}
           onEdit={() => onEdit(id)}
           onToggleDone={() => onToggleDone(id)}
           onDelete={() => onDelete(id)}
