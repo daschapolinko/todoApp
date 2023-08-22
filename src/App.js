@@ -20,9 +20,38 @@ export default class App extends Component {
     maxId: 0,
   };
 
+  addSec = (id) => {
+    this.setState((state) => {
+      const arr = state.items;
+      const idx = arr.findIndex((item) => item.id === id);
+      const oldItem = arr[idx];
+      const value = oldItem.timer + 1;
+      const item = { ...arr[idx], timer: value };
+      const items = [...arr.slice(0, idx), item, ...arr.slice(idx + 1)];
+      return { items };
+    });
+  };
+
   onToggleDone = (id) => {
     this.setState((state) => {
       const items = toggleProperty(state.items, id, 'completed');
+      return { items };
+    });
+  };
+
+  onToggleTimer = (id) => {
+    this.setState((state) => {
+      const arr = state.items;
+      const idx = arr.findIndex((item) => item.id === id);
+      const oldItem = arr[idx];
+      let timerNewId = null;
+      if (oldItem.timerId) {
+        clearInterval(oldItem.timerId);
+      } else {
+        timerNewId = setInterval(() => this.addSec(id), 1000);
+      }
+      const item = { ...arr[idx], timerId: timerNewId };
+      const items = [...arr.slice(0, idx), item, ...arr.slice(idx + 1)];
       return { items };
     });
   };
@@ -53,30 +82,36 @@ export default class App extends Component {
     this.setState({ filter });
   };
 
-  onItemAdded = (label) => {
-    this.setState((state) => {
-      const newItem = {
-        id: state.maxId + 1,
-        description: label,
-        creationTime: new Date(),
-        completed: false,
-        editing: false,
-      };
-      const items = [...state.items, newItem];
-      return { items, maxId: newItem.id };
-    });
+  onItemAdded = (label, timer) => {
+    if (label.trim()) {
+      this.setState((state) => {
+        const newItem = {
+          id: state.maxId + 1,
+          description: label,
+          creationTime: new Date(),
+          timer,
+          timerId: null,
+          completed: false,
+          editing: false,
+        };
+        const items = [...state.items, newItem];
+        return { items, maxId: newItem.id };
+      });
+    }
   };
 
   onEditLabel = (id, label) => {
-    this.setState((state) => {
-      const arr = state.items;
-      const idx = arr.findIndex((item) => item.id === id);
-      const oldItem = arr[idx];
-      const value = !oldItem.editing;
-      const item = { ...arr[idx], description: label, editing: value };
-      const items = [...arr.slice(0, idx), item, ...arr.slice(idx + 1)];
-      return { items };
-    });
+    if (label.trim()) {
+      this.setState((state) => {
+        const arr = state.items;
+        const idx = arr.findIndex((item) => item.id === id);
+        const oldItem = arr[idx];
+        const value = !oldItem.editing;
+        const item = { ...arr[idx], description: label, editing: value };
+        const items = [...arr.slice(0, idx), item, ...arr.slice(idx + 1)];
+        return { items };
+      });
+    }
   };
 
   filterItems(filter) {
@@ -107,6 +142,7 @@ export default class App extends Component {
         <TaskList
           todos={visibleItems}
           onToggleDone={this.onToggleDone}
+          onToggleTimer={this.onToggleTimer}
           onDelete={this.onDelete}
           onEdit={this.onEdit}
           onEditLabel={this.onEditLabel}

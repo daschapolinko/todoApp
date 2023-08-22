@@ -2,13 +2,18 @@ import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
-function Task({ description, completed, creationTime, onToggleDone, onDelete, onEdit }) {
+function Task({ description, timer, completed, creationTime, onToggleDone, onToggleTimer, onDelete, onEdit }) {
   return (
     <div className="view">
       <input className="toggle" type="checkbox" onClick={onToggleDone} checked={completed} onChange={() => {}} />
-      <label onClick={onToggleDone}>
-        <span className="description">{description}</span>
-        <span className="created">
+      <label>
+        <span className="title">{description}</span>
+        <span className="description">
+          <button type="button" className="icon icon-play" onClick={onToggleTimer} disabled={!!completed} />
+          <button type="button" className="icon icon-pause" onClick={onToggleTimer} disabled={!!completed} />
+          {`${Math.floor(timer / 60)}:${timer % 60}`}
+        </span>
+        <span className="description">
           created {formatDistanceToNow(creationTime, { addSuffix: true, includeSeconds: true })}
         </span>
       </label>
@@ -21,6 +26,7 @@ function Task({ description, completed, creationTime, onToggleDone, onDelete, on
 Task.defaultProps = {
   creationTime: Date.now(),
   onToggleDone: () => {},
+  onToggleTimer: () => {},
   onDelete: () => {},
   onEdit: () => {},
 };
@@ -29,6 +35,7 @@ Task.propTypes = {
   description: PropTypes.string.isRequired,
   creationTime: PropTypes.instanceOf(Date),
   onToggleDone: PropTypes.func,
+  onToggleTimer: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
 };

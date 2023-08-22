@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Task from '../Task';
 import EditTaskForm from '../EditTaskForm';
 
-function TaskList({ todos, onEdit, onToggleDone, onDelete, onEditLabel }) {
+function TaskList({ todos, onEdit, onToggleDone, onToggleTimer, onDelete, onEditLabel }) {
   const elements = todos.map((item) => {
     const { id, completed, editing, ...props } = item;
     const classN = classNames({
@@ -19,6 +19,7 @@ function TaskList({ todos, onEdit, onToggleDone, onDelete, onEditLabel }) {
           completed={completed}
           onEdit={() => onEdit(id)}
           onToggleDone={() => onToggleDone(id)}
+          onToggleTimer={() => onToggleTimer(id)}
           onDelete={() => onDelete(id)}
         />
         {editing ? <EditTaskForm label={props.description} onEditLabel={(label) => onEditLabel(id, label)} /> : ''}
@@ -32,6 +33,7 @@ function TaskList({ todos, onEdit, onToggleDone, onDelete, onEditLabel }) {
 TaskList.defaultProps = {
   todos: [],
   onToggleDone: () => {},
+  onToggleTimer: () => {},
   onDelete: () => {},
   onEdit: () => {},
   onChangeLabel: () => {},
@@ -43,11 +45,13 @@ TaskList.propTypes = {
       id: PropTypes.number.isRequired,
       description: PropTypes.string.isRequired,
       creationTime: PropTypes.instanceOf(Date).isRequired,
+      timer: PropTypes.number,
       completed: PropTypes.bool,
       editing: PropTypes.bool,
     })
   ),
   onToggleDone: PropTypes.func,
+  onToggleTimer: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   onChangeLabel: PropTypes.func,
