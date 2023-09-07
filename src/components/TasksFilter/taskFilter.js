@@ -7,7 +7,7 @@ const filterButtons = [
   { name: 'completed', label: 'Completed' },
 ];
 
-function TaskFilter({ filter, onFilterChange }) {
+export default function TaskFilter({ filter, onFilterChange }) {
   const filters = filterButtons.map(({ name, label }) => (
     <li key={name}>
       <button type="button" className={name === filter ? 'selected' : ''} onClick={() => onFilterChange(name)}>
@@ -28,5 +28,3 @@ TaskFilter.propTypes = {
   filter: PropTypes.oneOf(['all', 'active', 'completed']),
   onFilterChange: PropTypes.func,
 };
-
-export default TaskFilter;

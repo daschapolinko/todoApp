@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import TaskFilter from '../TasksFilter/taskFilter';
 
-function Footer({ itemsLeft, onClearCompleted, filter, onFilterChange }) {
+export default function Footer({ itemsLeft, onClearCompleted, filter, onFilterChange }) {
   return (
     <footer className="footer">
       <span className="todo-count">{itemsLeft} items left</span>
@@ -28,5 +28,3 @@ Footer.propTypes = {
   onClearCompleted: PropTypes.func,
   onFilterChange: PropTypes.func,
 };
-
-export default Footer;

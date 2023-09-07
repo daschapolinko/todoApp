@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Task from '../Task';
 import EditTaskForm from '../EditTaskForm';
 
-function TaskList({ todos, onEdit, onToggleDone, onToggleTimer, onDelete, onEditLabel }) {
+export default function TaskList({ todos, onEdit, onToggleDone, onToggleTimer, onDelete, onEditLabel }) {
   const elements = todos.map((item) => {
     const { id, completed, editing, ...props } = item;
     const classN = classNames({
@@ -56,5 +56,3 @@ TaskList.propTypes = {
   onEdit: PropTypes.func,
   onChangeLabel: PropTypes.func,
 };
-
-export default TaskList;

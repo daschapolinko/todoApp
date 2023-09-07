@@ -2,7 +2,16 @@ import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 
-function Task({ description, timer, completed, creationTime, onToggleDone, onToggleTimer, onDelete, onEdit }) {
+export default function Task({
+  description,
+  timer,
+  completed,
+  creationTime,
+  onToggleDone,
+  onToggleTimer,
+  onDelete,
+  onEdit,
+}) {
   return (
     <div className="view">
       <input className="toggle" type="checkbox" onClick={onToggleDone} checked={completed} onChange={() => {}} />
@@ -39,5 +48,3 @@ Task.propTypes = {
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
 };
-
-export default Task;
